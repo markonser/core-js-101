@@ -247,11 +247,9 @@ function toArrayOfSquares(arr) {
  */
 function getMovingSum(arr) {
   const result = [];
-  let sum = 0;
-  arr.forEach((el, index) => {
+  arr.map((el, index) => {
     if (index === 0) { return result.push(el); }
-    sum = el + arr[index - 1];
-    return result.push(sum);
+    return result.push(el + result[index - 1]);
   });
   return result;
 }
@@ -267,8 +265,13 @@ function getMovingSum(arr) {
  * [ 'a', 'b', 'c' , null ]  => [ "b", null ]
  * [ "a" ] => []
  */
-function getSecondItems(/* arr */) {
-  throw new Error('Not implemented');
+function getSecondItems(arr) {
+  return arr.filter((el, index) => {
+    if (index % 2 === 0) {
+      return false;
+    }
+    return String(el);
+  });
 }
 
 
@@ -286,8 +289,15 @@ function getSecondItems(/* arr */) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  const result = [];
+
+  arr.map((item, index) => {
+    const fillArr = Array(index + 1);
+    fillArr.fill(item);
+    return result.push(...fillArr);
+  });
+  return result;
 }
 
 
@@ -304,8 +314,8 @@ function propagateItemsByPositionIndex(/* arr */) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-  throw new Error('Not implemented');
+function get3TopItems(arr) {
+  return arr.sort((a, b) => b - a).slice(0, 3);
 }
 
 
@@ -322,8 +332,18 @@ function get3TopItems(/* arr */) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  let count = 0;
+  arr.map((el) => {
+    if (el === '') {
+      return 0;
+    }
+    if (typeof (el) === 'number' && el > 0) {
+      count += 1;
+    }
+    return count;
+  });
+  return count;
 }
 
 /**
